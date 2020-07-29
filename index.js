@@ -195,3 +195,41 @@ aplicarFalta(2);
 // aplicando falta em um aluno que não existe no cadastro
 console.log('\naplicando falta em um aluno que não existe no cadastro');
 aplicarFalta(8);
+
+//    Função aplicarFalta
+
+//      Entrada
+//        alunoNumero -> int (número do aluno dentro do array de alunos)
+//        nota -> float (nota a ser cadastrada para o aluno)
+//      Saída
+//        retorna valor da última nota dada ao aluno, se ele está matriculado em algum curso, com feedback de sucesso
+//        imprime mensagem de feedback quando aluno existe no cadastro mas não está matriculado em nenhum curso
+//        imprime mensagem de feedback quando aluno não existe no cadastro
+
+const aplicarNota = (alunoNumero, nota) => {
+    if (alunosDaEscola[alunoNumero] != undefined) {
+        if (alunosDaEscola[alunoNumero].cursos.length > 0) {
+            alunosDaEscola[alunoNumero].notas.push(nota);
+            console.log('Nota do aluno ' + alunosDaEscola[alunoNumero].nome + ' cadastrada: ' + alunosDaEscola[alunoNumero].notas[alunosDaEscola[alunoNumero].notas.length-1]);
+            return alunosDaEscola[alunoNumero].notas[alunosDaEscola[alunoNumero].notas.length-1];
+        } else {
+            console.log('Aluno não está matriculado em nenhum curso.');
+        }
+    } else {
+        console.log('Aluno não existe no cadastro.')
+    }
+}
+
+// aplicando nota a um aluno cadastrado e matriculado em um curso
+console.log('\naplicando nota a um aluno cadastrado e matriculado em um curso');
+aplicarNota(6, 6.1);
+aplicarNota(6, 8.2);
+console.log(alunosDaEscola[6].notas);
+
+// aplicando nota a um aluno que não está matriculado em nenhum curso
+console.log('\naplicando nota a um aluno que não está matriculado em nenhum curso');
+aplicarNota(2, 6.1);
+
+// aplicando nota a um aluno que não existe no cadastro
+console.log('\naplicando nota a um aluno que não existe no cadastro');
+aplicarNota(8, 6.1);
