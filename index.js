@@ -251,8 +251,6 @@ aplicarNota(8, 6.1);
 //        retorna false e imprime mensagem de feedback se o aluno não está matriculado em nenhum curso
 //        retorna false e imprime mensagem de feedback se o aluno não existe no cadastro
 
-const calcularMedia = alunoNumero => alunosDaEscola[alunoNumero].notas.reduce()
-
 const aprovarAluno = alunoNumero => {
     if (alunosDaEscola[alunoNumero] != undefined) {
         if (alunosDaEscola[alunoNumero].cursos.length > 0) {
