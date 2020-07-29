@@ -39,24 +39,29 @@ const alunosDaEscola = [
 //      Saída
 //        retorna comprimento do novo array de alunos
 //        exibe mensagem de feedback que o aluno foi adicionado ao cadastro em caso de sucesso
-//        exibe mensagem de feedback que o aluno não foi adicionado ao cadastro, em caso de fracasso
+//        exibe mensagem de feedback que o aluno não foi adicionado ao cadastro, em caso de fracasso, e retorna o comprimento do array
+//        antigo de alunos
 
 const adicionarAluno = nome => {
-    let novoAluno = {
-        nome,
-        notas: [],
-        cursos: [],
-        faltas: 0
-    };
-    let numeroDeAlunosAnterior = alunosDaEscola.length;
-    let numeroDeAlunosAtualizado = alunosDaEscola.push(novoAluno);
-    if (numeroDeAlunosAtualizado > numeroDeAlunosAnterior && typeof(nome) == 'string') {
-        console.log('O aluno ' + novoAluno.nome + ' foi adicionado com sucesso!');
-        return alunosDaEscola.length;
+    if (typeof(nome) == 'string') {
+        let novoAluno = {
+            nome,
+            notas: [],
+            cursos: [],
+            faltas: 0
+        };
+        let numeroDeAlunosAnterior = alunosDaEscola.length;
+        let numeroDeAlunosAtualizado = alunosDaEscola.push(novoAluno);
+        if (numeroDeAlunosAtualizado > numeroDeAlunosAnterior) {
+            console.log('O aluno ' + novoAluno.nome + ' foi adicionado com sucesso!');
+            return alunosDaEscola.length;
+        } 
     } else {
         console.log('O aluno não foi adicionado à lista.');
-    };
+        return alunosDaEscola.length;
+    }
 };
+
 
 // adicionando aluno novo ao cadastro de alunos
 console.log('\nadicionando aluno novo ao cadastro de alunos');
@@ -68,7 +73,7 @@ console.log(adicionarAluno(undefined));
 console.log(alunosDaEscola);
 
 
-//    Função listarAlunos
+//    2. Função listarAlunos
 
 //      Entrada
 //        não tem entradas
@@ -101,10 +106,10 @@ const listarAlunos = () => {
     });
 };
 
-//listarAlunos();
+listarAlunos();
 
 
-//    Função buscarAluno
+//    3. Função buscarAluno
 
 //      Entrada
 //        nome -> string (nome do aluno a ser buscado)
@@ -132,7 +137,8 @@ buscarAluno('Carla');
 console.log('\nbuscando aluno que está no cadastro');
 console.log(buscarAluno('Carla Scherer'));
 
-//    Função matricularAluno
+
+//    4. Função matricularAluno
 
 //  Entrada
 //    alunoNumero -> int (número do aluno dentro do array de alunos)
@@ -159,7 +165,8 @@ console.log(matricularAluno(6, "Full Stack"));
 console.log('\nmatriculando aluno que não existe no cadastro de alunos');
 matricularAluno(8, 'Full Stack');
 
-//    Função aplicarFalta
+
+//    5. Função aplicarFalta
 
 //      Entrada
 //        alunoNumero -> int (número do aluno dentro do array de alunos)
@@ -196,7 +203,7 @@ aplicarFalta(2);
 console.log('\naplicando falta em um aluno que não existe no cadastro');
 aplicarFalta(8);
 
-//    Função aplicarFalta
+//    6. Função aplicarFalta
 
 //      Entrada
 //        alunoNumero -> int (número do aluno dentro do array de alunos)
@@ -233,3 +240,46 @@ aplicarNota(2, 6.1);
 // aplicando nota a um aluno que não existe no cadastro
 console.log('\naplicando nota a um aluno que não existe no cadastro');
 aplicarNota(8, 6.1);
+
+//    7. Função aprovarAluno
+
+//      Entrada
+//        alunoNumero -> int (número do aluno dentro do array de alunos)
+//      Saída
+//        retorna true se o aluno foi aprovado e false se não foi aprovado, junto com mensagem de feedback,
+//        caso o aluno esteja matriculado em um curso
+//        retorna false e imprime mensagem de feedback se o aluno não está matriculado em nenhum curso
+//        retorna false e imprime mensagem de feedback se o aluno não existe no cadastro
+
+const calcularMedia = alunoNumero => alunosDaEscola[alunoNumero].notas.reduce()
+
+const aprovarAluno = alunoNumero => {
+    if (alunosDaEscola[alunoNumero] != undefined) {
+        if (alunosDaEscola[alunoNumero].cursos.length > 0) {
+            let soma = alunosDaEscola[alunoNumero].notas.reduce( (a,b) => a+b );
+            let media = soma / alunosDaEscola[alunoNumero].notas.length;
+            let minima = 7;
+            let alunoAprovado = (alunosDaEscola[alunoNumero].faltas <= 3) && media >= minima;
+            console.log('Aluno ' + alunosDaEscola[alunoNumero].nome + ' aprovado com média: ' + media);
+            return alunoAprovado;
+        } else {
+            console.log('Aluno não está matriculado em nenhum curso.');
+            return false;
+        }
+    } else {
+        console.log('Aluno não existe no cadastro.')
+        return false;
+    }
+}
+
+// aprovando um aluno cadastrado e matriculado em um curso
+console.log('\naprovando um aluno cadastrado e matriculado em um curso');
+aprovarAluno(6);
+
+// aprovando um aluno que não está matriculado em nenhum curso
+console.log('\naprovando um aluno que não está matriculado em nenhum curso');
+aprovarAluno(2);
+
+// aprovando um aluno que não existe no cadastro
+console.log('\naprovando um aluno que não existe no cadastro');
+aprovarAluno(8);
